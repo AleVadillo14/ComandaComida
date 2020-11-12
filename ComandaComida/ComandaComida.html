@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Comanda Strox</title>
+	</head>
+	<body style="margin: 0;">
+	<script>
+		function cantidad2(b) {
+		limpiar(this);
+		var cant=document.getElementById("cantidad");
+		var titulo=document.createElement("h3");
+		var formu=document.createElement("form");
+		var ren=document.createElement("p");
+		var label=document.createElement("label");
+		var texLabel=document.createTextNode("Cantidad: ");
+		var txtBox=document.createElement("input");
+		var btn=document.createElement("button");
+		var txtBtn=document.createTextNode("ENVIAR");
+		cant.appendChild(titulo);
+		titulo.setAttribute("id","tit")
+		cant.appendChild(formu);
+		formu.setAttribute("id","formulario")
+		formu.appendChild(ren);
+		ren.appendChild(label);
+		label.appendChild(texLabel);
+		ren.appendChild(txtBox);
+		txtBox.setAttribute("type","text");
+		txtBox.setAttribute("id","cont");
+		txtBox.setAttribute("value","0");
+		ren.appendChild(btn);
+		btn.appendChild(txtBtn);
+		btn.setAttribute("id","btnEnviar");
+		btn.setAttribute("onclick","limpiar(this);");
+		btn.setAttribute("type","button");
+			switch (b.id){
+				case "pescado":
+					var texto=document.createTextNode('Pescado');
+					titulo.appendChild(texto);
+					break;
+				case "pollo":
+					var texto=document.createTextNode('Pollo');
+					titulo.appendChild(texto);
+					break;
+				case "camaron":
+					var texto=document.createTextNode('Camarón');
+					titulo.appendChild(texto);
+					break;
+				case "codorniz":
+					var texto=document.createTextNode('Codorniz');
+					titulo.appendChild(texto);
+					break;
+			}
+		}
+
+		function limpiar(a){
+			var padre=document.getElementById("cantidad");
+			var titulo=document.getElementById("tit");
+			var cuerpo=document.getElementById("formulario")
+			if (a.id=="btnEnviar"){
+				addPedido();
+			}
+			if(titulo){
+				padre.removeChild(titulo);
+				padre.removeChild(cuerpo);
+			}
+		}
+		function addPedido(){
+			var list=document.getElementById("lista");
+			var titulo=document.getElementById("tit");
+			var pedido=document.createElement("p");
+			pedido.setAttribute("class","renglones");
+			var producto=titulo.innerHTML;
+			var valor=document.getElementById("cont").value;
+			var texto=document.createTextNode(producto+" "+valor);
+			list.appendChild(pedido);
+			pedido.appendChild(texto);
+		}
+		var cont=0;
+		function generarTabla(){
+			var tabla=document.getElementById("tabla");
+			var lineas=document.getElementsByClassName("renglones");
+			for(var i=0; i<lineas.length; i++){
+				var fila=document.createElement("tr");
+				var elemento=lineas[i].innerHTML;
+				var array=elemento.split(" ");
+				for(var j=0; j<3; j++){
+					var columna=document.createElement("td");
+					switch (j){
+						case 0:
+							cont++;
+							var texto=document.createTextNode(cont);
+							break;
+						case 1:
+							var texto=document.createTextNode(array[0]);
+							break;
+						case 2:
+							var texto=document.createTextNode(array[1]);
+							break;
+					}
+					columna.appendChild(texto);
+					columna.setAttribute("align","center");
+					fila.append(columna);
+				}
+				tabla.appendChild(fila);
+			}
+		}
+	</script>
+		<div id="main" align="center">
+			<header style="background-color:#80cee1;">
+				<div id="title" align="center">
+					<h1 style="margin: 0;">Comanda de Comida</h1>
+				</div>
+			</header>
+			<br></br>
+			
+			<div id="iconos" align="center" style="background-color:#c8c8d8; width:450px; padding: 10px 0px 20px">
+				<h2 style="margin:5px">Menú</h2>
+				<table>
+					<tr>
+						<td class="menu" id="pescado" align="center" width="95px" style="background-color:#5d9b9b" onclick="cantidad2(this);">
+							<img width="64px" src="images/pescado.png">
+							<h4 style="margin:5px">Pescado</h4>
+						</td>
+						<td class="menu" id="pollo" align="center" width="95px" style="background-color:#5d9b9b" onclick="cantidad2(this);">
+							<img  width="64px" src="images/pollo.png">
+							<h4 style="margin:5px">Pollo</h4>
+						</td >
+						<td class="menu" id="camaron" align="center" width="95px" style="background-color:#5d9b9b" onclick="cantidad2(this);">
+							<img width="64px" src="images/camaron.png">
+							<h4 style="margin:5px">Camarón</h4>
+						</td>
+						<td class="menu" id="codorniz" align="center" width="95px" style="background-color:#5d9b9b" onclick="cantidad2(this);">
+							<img width="64px" src="images/codorniz.png">
+							<h4 style="margin:5px">Codorniz</h4>
+						</td>
+					<tr>
+				</table>
+			</div>
+			<br></br>
+			<div id="main" align="center" width="200px" style="background-color:#cdcdcd; height:800px"> 
+				<div id="cantidad" width="100px" style="height:100px; background-color:#cdcdcd">
+				</div>
+				<hr width="95%" color="#e3e4e5"> 
+				<div>
+					<h3>Su pedido:</h3>
+					<div id="lista"  width="100px" style="height:130px; background-color:#fdddca; margin:10px 60px">
+					</div>
+					<button onclick="generarTabla();">Agregar</button>
+				</div>
+				<br></br>
+				<div align="center" width="100px" style="height:350px; background-color:white;  margin:10px 60px">
+					<table id="tabla" width="450px">
+						<tr>
+							<th align="center">N° Pedido</th>
+							<th align="center">Tipo</th>
+							<th align="center">Cantidad</th>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
